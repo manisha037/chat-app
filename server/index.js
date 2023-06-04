@@ -10,16 +10,17 @@ require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 
-mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+
+
+const MONGO_URI = process.env.MONGO_URI;
+
+// Connect to MongoDB using Mongoose
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    console.log("DB Connetion Successfull");
+    console.log("DB Connection Successful");
   })
   .catch((err) => {
-    console.log(err.message);
+    console.error("Error connecting to MongoDB:", err);
   });
 
 app.use("/api/auth", authRoutes);
